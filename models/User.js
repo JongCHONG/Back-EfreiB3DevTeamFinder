@@ -4,6 +4,7 @@ const userSchema = mongoose.Schema ({
     username: String,
     password: String,
     valorant_id: String,
+    rank: String,
     mail: String,
     discord: String,
     announcements : [],
