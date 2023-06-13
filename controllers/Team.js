@@ -16,7 +16,7 @@ export const getTeams = async (req,res) => {
 export const getTeam = async (req,res) => {
     try {
         const id = req.params.id;
-        const team = await Team.findOne({ _id: id });
+        const team = await Team.findById(id);
         if (team) {
             res.status(200).json(team);
             console.log("Get team success");
