@@ -59,14 +59,14 @@ export const createTeam = async (req, res) => {
 export const updateTeam = async (req, res) => {
   try {
     const id = req.params.id;
-    const team = req.body;
+    const { teammates, ...otherData } = req.body;
 
-    if (id && team) {
+    if (id && (otherData || teammates)) {
       // spread operator: ... pour récupérer les autres champs de team qui a cet _id
       // new: true pour retourner la team après l'update
       const updatedTeam = await Team.findByIdAndUpdate(
         id,
-        { ...team, id },
+        { $push: { teammates: teammates }, ...otherData },
         { new: true }
       );
       res.status(200).json(updatedTeam);
@@ -84,7 +84,8 @@ export const deleteTeam = async (req, res) => {
   try {
     const id = req.params.id;
     if (id) {
-      await Team.findByIdAndRemove(id);
+      await Team.deleteOne({ _id: id }).exec();
+
       res.status(200).json({ message: "Team deleted successfully" });
       console.log("Delete team success");
     }
