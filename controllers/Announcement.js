@@ -10,5 +10,5 @@ export const createAnnouncement = async (req,res) => {
 }
 
 export const deleteAnnouncement = async (req,res) => {
-    
+    console.log('hello')
 }
