@@ -1,21 +1,24 @@
-import mongoose from 'mongoose'
+import { ObjectId } from "mongodb";
+import mongoose from "mongoose";
 
-const teamSchema = mongoose.Schema ({
+const teamSchema = mongoose.Schema(
+  {
     name: String,
     description: String,
-    team_leader_id: String,
-    region : String,
+    team_leader_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    region: String,
     logo: String,
     availability: [String],
-    teammates: [],
-    announcements : [],
-    createdAt: {
-        type: Date,
-        default: new Date()
-    }
-})
+    teammates: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    announcements: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Announcement" },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-
-const Team = mongoose.model('Team', teamSchema);
+const Team = mongoose.model("Team", teamSchema);
 
 export default Team;
