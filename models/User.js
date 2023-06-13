@@ -1,25 +1,25 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const userSchema = mongoose.Schema ({
-    username: String,
-    password: String,
+const userSchema = mongoose.Schema(
+  {
+    username: {type: String, unique : true, required : true},
+    password: {type: String, required : true},
     valorant_id: String,
     rank: String,
-    mail: String,
-    discord: String,
-    announcements : [],
-    region : String,
+    mail: {type: String, unique : true, required : true},
+    discord: {type: String, unique : true, required : true},
+    announcements: [],
+    region: String,
     availability: [String],
     teams: [],
     conversations: [],
     avatar: String,
-    createdAt: {
-        type: Date,
-        default: new Date()
-    }
-})
+  },
+  {
+    timestamps: true,
+  }
+);
 
-
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User;
