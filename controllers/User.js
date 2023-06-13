@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 import User from "../models/User.js";
 
+// Get list Users
+
 export const getUsers = async (req, res) => {
   try {
-    const user = await User.find();
+    const user = await User.find().populate("teams", "name").exec()
     res.status(200).json(user);
     if (user) {
       console.log("get users success");
@@ -13,10 +15,12 @@ export const getUsers = async (req, res) => {
   }
 };
 
+// Get User by ID
+
 export const getUserbyId = async (req, res) => {
   const { id: _id } = req.params;
   try {
-    const user = await User.findById(_id).exec();
+    const user = await User.findById(_id).populate("teams", "name").exec()
     res.status(200).json(user);
     if (user) {
       console.log("get user by his id success");
@@ -26,9 +30,10 @@ export const getUserbyId = async (req, res) => {
   }
 }
 
+// Create new User
+
 export const createUser = async (req, res) => {
   const user = req.body;
-  console.log(user);
   const existingUser = await User.findOne({ mail: user.mail }).exec();
   const newUser = new User(user);
 
@@ -45,6 +50,8 @@ export const createUser = async (req, res) => {
   }
 };
 
+// Update User
+
 export const updateUser = async (req, res) => {
   const { id: _id } = req.params;
   const user = req.body;
@@ -58,6 +65,8 @@ export const updateUser = async (req, res) => {
   res.json(updatedUser);
   console.log('user profile updated')
 };
+
+//delete User
 
 export const deleteUser = async (req, res) => {
   const { id } = req.params;

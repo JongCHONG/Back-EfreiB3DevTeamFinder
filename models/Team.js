@@ -19,6 +19,20 @@ const teamSchema = mongoose.Schema(
   }
 );
 
+teamSchema.post('save', async team => {
+  await mongoose.model('User').findOneAndUpdate(
+      { _id: team.team_leader_id },
+      { $push: { teams: team._id } }
+  )
+})
+
+teamSchema.post('findByIdAndRemove', async team => {
+  await mongoose.model('User').findOneAndUpdate(
+      { _id: team.team_leader_id },
+      { $pull: { teams: team._id} }
+  )
+})
+
 const Team = mongoose.model("Team", teamSchema);
 
 export default Team;

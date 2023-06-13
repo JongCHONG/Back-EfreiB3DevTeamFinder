@@ -11,7 +11,7 @@ const userSchema = mongoose.Schema(
     announcements: [],
     region: String,
     availability: [String],
-    teams: [],
+    teams: [{ type: mongoose.Schema.Types.ObjectId, ref: "Team" }],
     conversations: [],
     avatar: String,
   },
