@@ -6,12 +6,25 @@ export const getUsers = async (req, res) => {
     const user = await User.find();
     res.status(200).json(user);
     if (user) {
-      console.log("get user success");
+      console.log("get users success");
     }
   } catch (error) {
     console.log({ message: error.message });
   }
 };
+
+export const getUserbyId = async (req, res) => {
+  const { id: _id } = req.params;
+  try {
+    const user = await User.findById(_id).exec();
+    res.status(200).json(user);
+    if (user) {
+      console.log("get user by his id success");
+    }
+  } catch (error) {
+    console.log({ message: error.message });
+  }
+}
 
 export const createUser = async (req, res) => {
   const user = req.body;
