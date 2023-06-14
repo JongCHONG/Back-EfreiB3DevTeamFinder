@@ -1,21 +1,22 @@
 import mongoose from "mongoose";
 
-const announcementSchema = mongoose.Schema({
-  name: String,
-  user_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+const announcementSchema = mongoose.Schema(
+  {
+    name: String,
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    team_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    announcement_text: String,
   },
-  team_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  announcement_text: String,
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Announcement = mongoose.model("Announcement", announcementSchema);
 

@@ -39,6 +39,11 @@ teamSchema.pre("deleteOne", async function () {
     .updateMany({ teams: teamId }, { $pull: { teams: teamId } });
 });
 
+teamSchema.pre("deleteOne", async function () {
+  const teamId = this.getQuery()["_id"];
+  await mongoose.model("Announcement").deleteMany({ team_id: teamId });
+});
+
 const Team = mongoose.model("Team", teamSchema);
 
 export default Team;
