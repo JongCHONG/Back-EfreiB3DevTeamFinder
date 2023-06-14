@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import teamRoutes from "./routes/Team.js";
 import bodyParser from "body-parser";
-
+import AnnouncementRoutes from "./routes/Announcement.js"
 import UserRoutes from "./routes/User.js"
 
 const app = express();
@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use("/teams/", teamRoutes);
+app.use("/announcement", AnnouncementRoutes)
 
 mongoose
   .connect(process.env.CONNECTION_URL, {
