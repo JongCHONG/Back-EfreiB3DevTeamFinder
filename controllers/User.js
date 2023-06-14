@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import Team from "../models/Team.js";
 
@@ -36,12 +37,14 @@ export const getUserbyId = async (req, res) => {
 export const createUser = async (req, res) => {
   const user = req.body;
   const existingUser = await User.findOne({ mail: user.mail }).exec();
-  const newUser = new User(user);
 
   try {
     if (existingUser) {
       res.status(409).json({ error: "User already exists" });
     } else {
+      const hashedPassword = await bcrypt.hash(user.password, 10);
+      const newUser = new User({ ...user, password: hashedPassword });
+
       await newUser.save();
       res.status(201).json(newUser);
       console.log("new user added");
@@ -83,8 +86,14 @@ export const deleteUser = async (req, res) => {
     await Team.updateMany({ $pull: { teammates: id } });
     const { deletedCount } = await Team.deleteMany({ team_leader_id: id });
 
-    res.status(200).json({ message: `User deleted. Deleted ${deletedCount} teams. Removed from teams.`});
-    console.log(`User deleted. Deleted ${deletedCount} teams. Removed from teams.`);
+    res
+      .status(200)
+      .json({
+        message: `User deleted. Deleted ${deletedCount} teams. Removed from teams.`,
+      });
+    console.log(
+      `User deleted. Deleted ${deletedCount} teams. Removed from teams.`
+    );
   } catch (error) {
     console.log("Error deleting:", error.message);
   }
