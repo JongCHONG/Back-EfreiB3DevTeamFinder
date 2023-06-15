@@ -1,12 +1,19 @@
 import express from "express";
-import { getTeams, getTeamById, createTeam, updateTeam, deleteTeam } from "../controllers/Team.js";
+import {
+  getTeams,
+  getTeamById,
+  createTeam,
+  updateTeam,
+  deleteTeam,
+} from "../controllers/Team.js";
+import { authenticateToken } from "../middlewares/Authentification.js";
 
-const router = express.Router()
+const router = express.Router();
 
 router.get("/", getTeams);
 router.get("/:id", getTeamById);
-router.post("/", createTeam);
-router.put("/:id", updateTeam)
-router.delete("/:id", deleteTeam);
+router.post("/", authenticateToken, createTeam);
+router.put("/:id", authenticateToken, updateTeam);
+router.delete("/:id", authenticateToken, deleteTeam);
 
-export default router
+export default router;
