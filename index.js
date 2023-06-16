@@ -23,7 +23,7 @@ app.use(cors({
 app.use("/users", UserRoutes);
 app.use("/teams", TeamRoutes);
 app.use("/auth", AuthRoutes);
-app.use("/announcement", AnnouncementRoutes)
+app.use("/announcements", AnnouncementRoutes)
 
 const PORT = process.env.PORT || 5000;
 

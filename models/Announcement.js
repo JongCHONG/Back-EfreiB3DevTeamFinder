@@ -2,14 +2,13 @@ import mongoose from "mongoose";
 
 const announcementSchema = mongoose.Schema(
   {
-    name: String,
-    user_id: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    team_id: {
+    team: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Team",
     },
     announcement_text: String,
   },

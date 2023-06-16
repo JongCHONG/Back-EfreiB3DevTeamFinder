@@ -10,7 +10,7 @@ export const getUsers = async (req, res) => {
     const user = await User.find().populate("teams", "name").exec();
     res.status(200).json(user);
     if (user) {
-      console.log("get users success");
+      console.log("Get Users success");
     }
   } catch (error) {
     console.log({ message: error.message });
